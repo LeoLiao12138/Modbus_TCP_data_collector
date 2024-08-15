@@ -17,3 +17,22 @@ C:\Users\IPC-GZ\Documents\C# project\Modbus_TCP_data_collector\Modbus_TCP_data_c
 C:\Users\IPC-GZ\Documents\C# project\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\obj\Debug\Modbus_TCP_data_collector.pdb
 C:\Users\IPC-GZ\Documents\C# project\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\bin\Debug\NModbus.dll
 C:\Users\IPC-GZ\Documents\C# project\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\bin\Debug\NModbus.xml
+D:\01 C# project\LeoLiao12138\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\bin\Debug\Modbus_TCP_data_collector.exe.config
+D:\01 C# project\LeoLiao12138\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\bin\Debug\Modbus_TCP_data_collector.exe
+D:\01 C# project\LeoLiao12138\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\bin\Debug\Modbus_TCP_data_collector.pdb
+D:\01 C# project\LeoLiao12138\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\bin\Debug\NModbus.dll
+D:\01 C# project\LeoLiao12138\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\bin\Debug\NModbus4.dll
+D:\01 C# project\LeoLiao12138\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\bin\Debug\OxyPlot.dll
+D:\01 C# project\LeoLiao12138\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\bin\Debug\OxyPlot.WindowsForms.dll
+D:\01 C# project\LeoLiao12138\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\bin\Debug\NModbus.xml
+D:\01 C# project\LeoLiao12138\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\bin\Debug\NModbus4.xml
+D:\01 C# project\LeoLiao12138\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\bin\Debug\OxyPlot.xml
+D:\01 C# project\LeoLiao12138\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\bin\Debug\OxyPlot.WindowsForms.xml
+D:\01 C# project\LeoLiao12138\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\obj\Debug\Modbus_TCP_data_collector.csproj.AssemblyReference.cache
+D:\01 C# project\LeoLiao12138\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\obj\Debug\Modbus_TCP_data_collector.Form1.resources
+D:\01 C# project\LeoLiao12138\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\obj\Debug\Modbus_TCP_data_collector.Properties.Resources.resources
+D:\01 C# project\LeoLiao12138\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\obj\Debug\Modbus_TCP_data_collector.csproj.GenerateResource.cache
+D:\01 C# project\LeoLiao12138\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\obj\Debug\Modbus_TCP_data_collector.csproj.CoreCompileInputs.cache
+D:\01 C# project\LeoLiao12138\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\obj\Debug\Modbus_T.A45F25EA.Up2Date
+D:\01 C# project\LeoLiao12138\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\obj\Debug\Modbus_TCP_data_collector.exe
+D:\01 C# project\LeoLiao12138\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\Modbus_TCP_data_collector\obj\Debug\Modbus_TCP_data_collector.pdb

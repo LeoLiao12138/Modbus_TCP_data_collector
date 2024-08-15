@@ -17,7 +17,7 @@ namespace Modbus_TCP_data_collector
         private Thread readThread;
         private bool isReading = false;
         private static int[] myarray = new int[100];
-        private List<int> dataBuffer = new List<int>(myarray);
+        private List<int> dataBuffer = new List<int>();
         
 
 
@@ -75,7 +75,7 @@ namespace Modbus_TCP_data_collector
                 {
                     ushort[] registers = master.ReadHoldingRegisters(Convert.ToUInt16(textBoxaddress.Text), 1);
                     dataBuffer.Add(registers[0]);                
-                    if (dataBuffer.Count > 100) dataBuffer.RemoveAt(0);
+                    if (dataBuffer.Count > 1000) dataBuffer.RemoveAt(0);
 
                     Invoke(new Action(() =>
                     {
@@ -89,7 +89,7 @@ namespace Modbus_TCP_data_collector
                         plotView1.InvalidatePlot(true);
                     }));
 
-                    Thread.Sleep(1000); // Read every second  
+                    Thread.Sleep(10); // Read every second  
                 }
                 catch (Exception ex)
                 {
@@ -118,10 +118,10 @@ namespace Modbus_TCP_data_collector
             {
                 try
                 {
+                    isReading = false;
                     tcpClient.Close(); // 或者使用 tcpClient.Dispose();  
                     tcpClient = null; // 可选：将tcpClient设置为null，以便垃圾回收  
-                    master = null; // 可选：将ModbusIpMaster实例设置为null
-                    isReading = false;
+                    master = null; // 可选：将ModbusIpMaster实例设置为null                    
                     MessageBox.Show("连接已断开");
                     buttonConnect.Enabled = true;
                     buttonDisconnect.Enabled = false;
