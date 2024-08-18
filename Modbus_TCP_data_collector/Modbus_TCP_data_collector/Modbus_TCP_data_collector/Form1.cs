@@ -1,8 +1,11 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
 using System.Net.Sockets;
+using System.Diagnostics;
 using Modbus.Device; // NModbus4  
 using OxyPlot;
 using OxyPlot.Axes;
@@ -16,18 +19,82 @@ namespace Modbus_TCP_data_collector
         private TcpClient tcpClient;
         private Thread readThread;
         private bool isReading = false;
-        private static int[] myarray = new int[100];
         private List<int> dataBuffer = new List<int>();
-        
-
+        private static string folderPath = Directory.GetCurrentDirectory()+"/data";  // 请替换为您的实际文件夹路径
+        string filePath;
+        string newFileName;
+        string newFilePath;
 
         public Form1()
         {
+
             InitializeComponent();
             InitializePlot();
             buttonDisconnect.Enabled = false;
             buttonReadData.Enabled = false;
             buttonStopRead.Enabled = false;
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+            // 判断文件是否存在，不存在则创建
+            if ((Directory.GetFiles(folderPath)).Length==0)
+            {
+                using (StreamWriter sw = File.CreateText(Path.Combine(folderPath, "1.csv")))
+                {
+                    // 写入表头（可选）
+                    //sw.WriteLine("Data");
+                }
+            }
+            string[] files = Directory.GetFiles(folderPath, "*.csv");
+            int maxNumberoffiles = GetMaxNumoffiles(files);
+
+            filePath = Path.Combine(folderPath, (maxNumberoffiles + ".csv"));
+
+            int maxfile_rows = GetCurrentRows(filePath);
+
+            if (maxfile_rows<6000)
+            {
+                newFileName = maxNumberoffiles + ".csv";
+                newFilePath = Path.Combine(folderPath, newFileName);
+            }
+            else
+            {
+                newFileName = (maxNumberoffiles + 1) + ".csv";
+                newFilePath = Path.Combine(folderPath, newFileName);
+                File.Create(newFilePath);
+            }
+        }
+
+        static int GetMaxNumoffiles(string[] files)
+        {
+            int maxNumber = files.Select(file =>
+            {
+                string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
+                if (int.TryParse(fileNameWithoutExtension, out int number))
+                {
+                    return number;
+                }
+                return 0; // 如果文件名不是纯数字，返回0
+            }).Max();
+            return maxNumber;
+        }
+
+        static int GetCurrentRows(string filePath)
+        {
+            int count = 0;
+            if (File.Exists(filePath))
+            {
+                using (StreamReader sr = new StreamReader(filePath))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        sr.ReadLine();
+                        count++;
+                    }
+                }
+            }
+            return count;
         }
 
         private void InitializePlot()
@@ -65,6 +132,7 @@ namespace Modbus_TCP_data_collector
             isReading = true;
             readThread = new Thread(ReadData);
             readThread.Start();
+
         }
 
         private void ReadData()
@@ -74,8 +142,26 @@ namespace Modbus_TCP_data_collector
                 try
                 {
                     ushort[] registers = master.ReadHoldingRegisters(Convert.ToUInt16(textBoxaddress.Text), 1);
-                    dataBuffer.Add(registers[0]);                
+                    dataBuffer.Add(registers[0]);
                     if (dataBuffer.Count > 1000) dataBuffer.RemoveAt(0);
+
+
+                    int current_maxrows= GetCurrentRows(newFilePath);
+
+                    if (current_maxrows >=6000)
+                    {
+                        string[] files = Directory.GetFiles(folderPath, "*.csv");
+                        int maxNumberoffiles = GetMaxNumoffiles(files);
+                        newFileName = (maxNumberoffiles + 1) + ".csv";
+                        newFilePath = Path.Combine(folderPath, newFileName);
+                        //File.Create(newFilePath);
+                    }
+                    
+                    using (StreamWriter sw = new StreamWriter(newFilePath, true))
+                    {
+                        sw.WriteLine(registers[0]);
+                    }
+
 
                     Invoke(new Action(() =>
                     {
