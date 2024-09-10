@@ -37,14 +37,16 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxaddress = new System.Windows.Forms.TextBox();
+            this.plotView2 = new OxyPlot.WindowsForms.PlotView();
+            this.plotView3 = new OxyPlot.WindowsForms.PlotView();
+            this.plotView4 = new OxyPlot.WindowsForms.PlotView();
             this.SuspendLayout();
             // 
             // buttonConnect
             // 
-            this.buttonConnect.Location = new System.Drawing.Point(23, 58);
-            this.buttonConnect.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonConnect.Location = new System.Drawing.Point(31, 77);
             this.buttonConnect.Name = "buttonConnect";
-            this.buttonConnect.Size = new System.Drawing.Size(86, 25);
+            this.buttonConnect.Size = new System.Drawing.Size(115, 33);
             this.buttonConnect.TabIndex = 0;
             this.buttonConnect.Text = "Connect";
             this.buttonConnect.UseVisualStyleBackColor = true;
@@ -52,21 +54,19 @@
             // 
             // textBoxIP
             // 
-            this.textBoxIP.Location = new System.Drawing.Point(42, 27);
-            this.textBoxIP.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxIP.Location = new System.Drawing.Point(56, 36);
             this.textBoxIP.Name = "textBoxIP";
-            this.textBoxIP.Size = new System.Drawing.Size(68, 21);
+            this.textBoxIP.Size = new System.Drawing.Size(89, 22);
             this.textBoxIP.TabIndex = 1;
             this.textBoxIP.Text = "127.0.0.1";
             this.textBoxIP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // plotView1
             // 
-            this.plotView1.Location = new System.Drawing.Point(213, 27);
-            this.plotView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.plotView1.Location = new System.Drawing.Point(284, 36);
             this.plotView1.Name = "plotView1";
             this.plotView1.PanCursor = System.Windows.Forms.Cursors.Hand;
-            this.plotView1.Size = new System.Drawing.Size(370, 292);
+            this.plotView1.Size = new System.Drawing.Size(493, 389);
             this.plotView1.TabIndex = 2;
             this.plotView1.Text = "plotView1";
             this.plotView1.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
@@ -75,10 +75,9 @@
             // 
             // buttonReadData
             // 
-            this.buttonReadData.Location = new System.Drawing.Point(123, 58);
-            this.buttonReadData.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonReadData.Location = new System.Drawing.Point(164, 77);
             this.buttonReadData.Name = "buttonReadData";
-            this.buttonReadData.Size = new System.Drawing.Size(86, 25);
+            this.buttonReadData.Size = new System.Drawing.Size(115, 33);
             this.buttonReadData.TabIndex = 3;
             this.buttonReadData.Text = "ReadData";
             this.buttonReadData.UseVisualStyleBackColor = true;
@@ -86,10 +85,9 @@
             // 
             // buttonStopRead
             // 
-            this.buttonStopRead.Location = new System.Drawing.Point(123, 100);
-            this.buttonStopRead.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonStopRead.Location = new System.Drawing.Point(164, 133);
             this.buttonStopRead.Name = "buttonStopRead";
-            this.buttonStopRead.Size = new System.Drawing.Size(86, 25);
+            this.buttonStopRead.Size = new System.Drawing.Size(115, 33);
             this.buttonStopRead.TabIndex = 4;
             this.buttonStopRead.Text = "StopRead";
             this.buttonStopRead.UseVisualStyleBackColor = true;
@@ -97,10 +95,9 @@
             // 
             // buttonDisconnect
             // 
-            this.buttonDisconnect.Location = new System.Drawing.Point(23, 100);
-            this.buttonDisconnect.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonDisconnect.Location = new System.Drawing.Point(31, 133);
             this.buttonDisconnect.Name = "buttonDisconnect";
-            this.buttonDisconnect.Size = new System.Drawing.Size(86, 25);
+            this.buttonDisconnect.Size = new System.Drawing.Size(115, 33);
             this.buttonDisconnect.TabIndex = 5;
             this.buttonDisconnect.Text = "Disconnect";
             this.buttonDisconnect.UseVisualStyleBackColor = true;
@@ -109,38 +106,74 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 31);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(21, 41);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(23, 12);
+            this.label1.Size = new System.Drawing.Size(22, 16);
             this.label1.TabIndex = 6;
             this.label1.Text = "IP:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(121, 27);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Location = new System.Drawing.Point(161, 36);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 12);
+            this.label2.Size = new System.Drawing.Size(61, 16);
             this.label2.TabIndex = 7;
             this.label2.Text = "Address:";
             // 
             // textBoxaddress
             // 
-            this.textBoxaddress.Location = new System.Drawing.Point(171, 27);
-            this.textBoxaddress.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxaddress.Location = new System.Drawing.Point(228, 36);
             this.textBoxaddress.Name = "textBoxaddress";
-            this.textBoxaddress.Size = new System.Drawing.Size(38, 21);
+            this.textBoxaddress.Size = new System.Drawing.Size(49, 22);
             this.textBoxaddress.TabIndex = 8;
             this.textBoxaddress.Text = "0";
             this.textBoxaddress.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // plotView2
+            // 
+            this.plotView2.Location = new System.Drawing.Point(770, 36);
+            this.plotView2.Name = "plotView2";
+            this.plotView2.PanCursor = System.Windows.Forms.Cursors.Hand;
+            this.plotView2.Size = new System.Drawing.Size(493, 389);
+            this.plotView2.TabIndex = 9;
+            this.plotView2.Text = "plotView2";
+            this.plotView2.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
+            this.plotView2.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
+            this.plotView2.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
+            // 
+            // plotView3
+            // 
+            this.plotView3.Location = new System.Drawing.Point(284, 415);
+            this.plotView3.Name = "plotView3";
+            this.plotView3.PanCursor = System.Windows.Forms.Cursors.Hand;
+            this.plotView3.Size = new System.Drawing.Size(493, 389);
+            this.plotView3.TabIndex = 10;
+            this.plotView3.Text = "plotView3";
+            this.plotView3.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
+            this.plotView3.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
+            this.plotView3.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
+            // 
+            // plotView4
+            // 
+            this.plotView4.Location = new System.Drawing.Point(770, 415);
+            this.plotView4.Name = "plotView4";
+            this.plotView4.PanCursor = System.Windows.Forms.Cursors.Hand;
+            this.plotView4.Size = new System.Drawing.Size(493, 389);
+            this.plotView4.TabIndex = 11;
+            this.plotView4.Text = "plotView4";
+            this.plotView4.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
+            this.plotView4.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
+            this.plotView4.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(600, 338);
+            this.ClientSize = new System.Drawing.Size(1275, 816);
+            this.Controls.Add(this.plotView4);
+            this.Controls.Add(this.plotView3);
+            this.Controls.Add(this.plotView2);
             this.Controls.Add(this.textBoxaddress);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -150,7 +183,6 @@
             this.Controls.Add(this.plotView1);
             this.Controls.Add(this.textBoxIP);
             this.Controls.Add(this.buttonConnect);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -170,6 +202,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxaddress;
+        private OxyPlot.WindowsForms.PlotView plotView2;
+        private OxyPlot.WindowsForms.PlotView plotView3;
+        private OxyPlot.WindowsForms.PlotView plotView4;
     }
 }
 

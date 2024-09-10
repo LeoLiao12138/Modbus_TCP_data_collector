@@ -3,9 +3,7 @@
     "",
     "\\Modbus_TCP_data_collector",
     "\\Modbus_TCP_data_collector\\Modbus_TCP_data_collector",
-    "\\Modbus_TCP_data_collector\\Modbus_TCP_data_collector\\Modbus_TCP_data_collector",
-    "\\Modbus_TCP_data_collector\\Modbus_TCP_data_collector\\Modbus_TCP_data_collector\\bin"
+    "\\Modbus_TCP_data_collector\\Modbus_TCP_data_collector\\Modbus_TCP_data_collector"
   ],
-  "SelectedNode": "\\Modbus_TCP_data_collector\\Modbus_TCP_data_collector\\Modbus_TCP_data_collector.sln",
   "PreviewInSolutionExplorer": false
 }

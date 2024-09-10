@@ -20,6 +20,9 @@ namespace Modbus_TCP_data_collector
         private Thread readThread;
         private bool isReading = false;
         private List<int> dataBuffer = new List<int>();
+        private List<int> dataBuffer1 = new List<int>();
+        private List<int> dataBuffer2 = new List<int>();
+        private List<int> dataBuffer3 = new List<int>();
         private static string folderPath = Directory.GetCurrentDirectory()+"/data";  // 请替换为您的实际文件夹路径
         string filePath;
         string newFileName;
@@ -43,7 +46,7 @@ namespace Modbus_TCP_data_collector
                 using (StreamWriter sw = File.CreateText(Path.Combine(folderPath, "1.csv")))
                 {
                     // 写入表头（可选）
-                    //sw.WriteLine("Data");
+                    sw.WriteLine("vRMS,aRMS,aPeak,Temperature");
                 }
             }
             string[] files = Directory.GetFiles(folderPath, "*.csv");
@@ -99,12 +102,33 @@ namespace Modbus_TCP_data_collector
 
         private void InitializePlot()
         {
-            var model = new PlotModel { Title = "Modbus Data" };
+            var model = new PlotModel { Title = "vRMS" };
             model.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = "Time"});
-            model.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = "Value" });
+            model.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = "mm/s" ,Minimum =0, Maximum =100});
             var lineSeries = new LineSeries();
             model.Series.Add(lineSeries);
             plotView1.Model = model;
+
+            var model1 = new PlotModel { Title = "aRMS" };
+            model1.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = "Time" });
+            model1.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = "g", Minimum = 0, Maximum = 100 });
+            var lineSeries1 = new LineSeries();
+            model1.Series.Add(lineSeries1);
+            plotView2.Model = model1;
+
+            var model2 = new PlotModel { Title = "aPeak" };
+            model2.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = "Time" });
+            model2.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = "g", Minimum = 0, Maximum = 100 });
+            var lineSeries2 = new LineSeries();
+            model2.Series.Add(lineSeries2);
+            plotView3.Model = model2;
+
+            var model3 = new PlotModel { Title = "Temperature" };
+            model3.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = "Time" });
+            model3.Axes.Add(new LinearAxis { Position = AxisPosition.Left,Title = "℃", Minimum = 0, Maximum = 100 });
+            var lineSeries3 = new LineSeries();
+            model3.Series.Add(lineSeries3);
+            plotView4.Model = model3;
         }
 
         private void buttonConnect_Click(object sender, EventArgs e)
@@ -141,38 +165,62 @@ namespace Modbus_TCP_data_collector
             {
                 try
                 {
-                    ushort[] registers = master.ReadHoldingRegisters(Convert.ToUInt16(textBoxaddress.Text), 1);
+                    ushort[] registers = master.ReadHoldingRegisters(Convert.ToUInt16(textBoxaddress.Text), 4);
                     dataBuffer.Add(registers[0]);
-                    if (dataBuffer.Count > 1000) dataBuffer.RemoveAt(0);
-
+                    dataBuffer1.Add(registers[1]);
+                    dataBuffer2.Add(registers[2]);
+                    dataBuffer3.Add(registers[3]);
+                    if (dataBuffer.Count > 1000)
+                    {
+                        dataBuffer.RemoveAt(0);
+                        dataBuffer1.RemoveAt(0);
+                        dataBuffer2.RemoveAt(0);
+                        dataBuffer3.RemoveAt(0);
+                    }
 
                     int current_maxrows= GetCurrentRows(newFilePath);
 
-                    if (current_maxrows >=6000)
+                    if (current_maxrows >=5000)
                     {
                         string[] files = Directory.GetFiles(folderPath, "*.csv");
                         int maxNumberoffiles = GetMaxNumoffiles(files);
                         newFileName = (maxNumberoffiles + 1) + ".csv";
                         newFilePath = Path.Combine(folderPath, newFileName);
                         //File.Create(newFilePath);
+                        using (StreamWriter sw = new StreamWriter(newFilePath, true))
+                        {
+                            sw.WriteLine("vRMS,aRMS,aPeak,Temperature");
+                        }
                     }
                     
                     using (StreamWriter sw = new StreamWriter(newFilePath, true))
                     {
-                        sw.WriteLine(registers[0]);
+                        sw.WriteLine($"{registers[0]},{registers[1]},{registers[2]},{registers[3]}");
                     }
 
 
                     Invoke(new Action(() =>
                     {
                         var series = (LineSeries)plotView1.Model.Series[0];
+                        var series1 = (LineSeries)plotView2.Model.Series[0];
+                        var series2 = (LineSeries)plotView3.Model.Series[0];
+                        var series3 = (LineSeries)plotView4.Model.Series[0];
                         series.Points.Clear();
+                        series1.Points.Clear();
+                        series2.Points.Clear();
+                        series3.Points.Clear();
                         DateTime my_time = DateTime.Now;
                         for (int i = 0; i < dataBuffer.Count; i++)
                         {
                             series.Points.Add(new DataPoint(i, dataBuffer[i]));
+                            series1.Points.Add(new DataPoint(i, dataBuffer1[i]));
+                            series2.Points.Add(new DataPoint(i, dataBuffer2[i]));
+                            series3.Points.Add(new DataPoint(i, dataBuffer3[i]));
                         }
                         plotView1.InvalidatePlot(true);
+                        plotView2.InvalidatePlot(true);
+                        plotView3.InvalidatePlot(true);
+                        plotView4.InvalidatePlot(true);
                     }));
 
                     Thread.Sleep(10); // Read every second  
