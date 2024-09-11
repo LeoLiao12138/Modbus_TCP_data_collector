@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.buttonConnect = new System.Windows.Forms.Button();
             this.textBoxIP = new System.Windows.Forms.TextBox();
             this.plotView1 = new OxyPlot.WindowsForms.PlotView();
@@ -36,15 +37,17 @@
             this.buttonDisconnect = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBoxaddress = new System.Windows.Forms.TextBox();
             this.plotView2 = new OxyPlot.WindowsForms.PlotView();
             this.plotView3 = new OxyPlot.WindowsForms.PlotView();
             this.plotView4 = new OxyPlot.WindowsForms.PlotView();
+            this.label3 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // buttonConnect
             // 
-            this.buttonConnect.Location = new System.Drawing.Point(31, 77);
+            this.buttonConnect.Location = new System.Drawing.Point(31, 188);
             this.buttonConnect.Name = "buttonConnect";
             this.buttonConnect.Size = new System.Drawing.Size(115, 33);
             this.buttonConnect.TabIndex = 0;
@@ -54,11 +57,11 @@
             // 
             // textBoxIP
             // 
-            this.textBoxIP.Location = new System.Drawing.Point(56, 36);
+            this.textBoxIP.Location = new System.Drawing.Point(74, 80);
             this.textBoxIP.Name = "textBoxIP";
-            this.textBoxIP.Size = new System.Drawing.Size(89, 22);
+            this.textBoxIP.Size = new System.Drawing.Size(96, 22);
             this.textBoxIP.TabIndex = 1;
-            this.textBoxIP.Text = "127.0.0.1";
+            this.textBoxIP.Text = "192.168.1.5";
             this.textBoxIP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // plotView1
@@ -75,7 +78,7 @@
             // 
             // buttonReadData
             // 
-            this.buttonReadData.Location = new System.Drawing.Point(164, 77);
+            this.buttonReadData.Location = new System.Drawing.Point(164, 188);
             this.buttonReadData.Name = "buttonReadData";
             this.buttonReadData.Size = new System.Drawing.Size(115, 33);
             this.buttonReadData.TabIndex = 3;
@@ -85,7 +88,7 @@
             // 
             // buttonStopRead
             // 
-            this.buttonStopRead.Location = new System.Drawing.Point(164, 133);
+            this.buttonStopRead.Location = new System.Drawing.Point(164, 244);
             this.buttonStopRead.Name = "buttonStopRead";
             this.buttonStopRead.Size = new System.Drawing.Size(115, 33);
             this.buttonStopRead.TabIndex = 4;
@@ -95,7 +98,7 @@
             // 
             // buttonDisconnect
             // 
-            this.buttonDisconnect.Location = new System.Drawing.Point(31, 133);
+            this.buttonDisconnect.Location = new System.Drawing.Point(31, 244);
             this.buttonDisconnect.Name = "buttonDisconnect";
             this.buttonDisconnect.Size = new System.Drawing.Size(115, 33);
             this.buttonDisconnect.TabIndex = 5;
@@ -106,7 +109,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 41);
+            this.label1.Location = new System.Drawing.Point(21, 83);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(22, 16);
             this.label1.TabIndex = 6;
@@ -115,20 +118,11 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(161, 36);
+            this.label2.Location = new System.Drawing.Point(21, 36);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(61, 16);
+            this.label2.Size = new System.Drawing.Size(51, 16);
             this.label2.TabIndex = 7;
-            this.label2.Text = "Address:";
-            // 
-            // textBoxaddress
-            // 
-            this.textBoxaddress.Location = new System.Drawing.Point(228, 36);
-            this.textBoxaddress.Name = "textBoxaddress";
-            this.textBoxaddress.Size = new System.Drawing.Size(49, 22);
-            this.textBoxaddress.TabIndex = 8;
-            this.textBoxaddress.Text = "0";
-            this.textBoxaddress.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.label2.Text = "Master:";
             // 
             // plotView2
             // 
@@ -166,15 +160,56 @@
             this.plotView4.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
             this.plotView4.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(21, 126);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(34, 16);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Port:";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "ICE11",
+            "ICE2/3"});
+            this.comboBox1.Location = new System.Drawing.Point(74, 33);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(96, 24);
+            this.comboBox1.TabIndex = 13;
+            this.comboBox1.SelectedIndex = 0;
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"});
+            this.comboBox2.Location = new System.Drawing.Point(74, 123);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(96, 24);
+            this.comboBox2.TabIndex = 14;
+            this.comboBox2.SelectedIndex = 0;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1275, 816);
+            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.plotView4);
             this.Controls.Add(this.plotView3);
             this.Controls.Add(this.plotView2);
-            this.Controls.Add(this.textBoxaddress);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonDisconnect);
@@ -183,6 +218,7 @@
             this.Controls.Add(this.plotView1);
             this.Controls.Add(this.textBoxIP);
             this.Controls.Add(this.buttonConnect);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -201,10 +237,12 @@
         private System.Windows.Forms.Button buttonDisconnect;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBoxaddress;
         private OxyPlot.WindowsForms.PlotView plotView2;
         private OxyPlot.WindowsForms.PlotView plotView3;
         private OxyPlot.WindowsForms.PlotView plotView4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox2;
     }
 }
 

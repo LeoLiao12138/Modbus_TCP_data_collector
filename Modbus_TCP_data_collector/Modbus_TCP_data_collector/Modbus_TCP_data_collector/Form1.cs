@@ -10,6 +10,7 @@ using Modbus.Device; // NModbus4
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
+using Modbus.Extensions.Enron;
 
 namespace Modbus_TCP_data_collector
 {
@@ -20,13 +21,15 @@ namespace Modbus_TCP_data_collector
         private Thread readThread;
         private bool isReading = false;
         private List<int> dataBuffer = new List<int>();
-        private List<int> dataBuffer1 = new List<int>();
-        private List<int> dataBuffer2 = new List<int>();
+        private List<float> dataBuffer1 = new List<float>();
+        private List<float> dataBuffer2 = new List<float>();
         private List<int> dataBuffer3 = new List<int>();
         private static string folderPath = Directory.GetCurrentDirectory()+"/data";  // 请替换为您的实际文件夹路径
         string filePath;
         string newFileName;
         string newFilePath;
+        ushort address = 0;
+
 
         public Form1()
         {
@@ -46,7 +49,7 @@ namespace Modbus_TCP_data_collector
                 using (StreamWriter sw = File.CreateText(Path.Combine(folderPath, "1.csv")))
                 {
                     // 写入表头（可选）
-                    sw.WriteLine("vRMS,aRMS,aPeak,Temperature");
+                    sw.WriteLine("Date,Time,vRMS(mm/s),aRMS(g),aPeak(g),Temperature(℃)");
                 }
             }
             string[] files = Directory.GetFiles(folderPath, "*.csv");
@@ -104,28 +107,28 @@ namespace Modbus_TCP_data_collector
         {
             var model = new PlotModel { Title = "vRMS" };
             model.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = "Time"});
-            model.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = "mm/s" ,Minimum =0, Maximum =100});
+            model.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = "mm/s" ,Minimum =0, Maximum =320});
             var lineSeries = new LineSeries();
             model.Series.Add(lineSeries);
             plotView1.Model = model;
 
             var model1 = new PlotModel { Title = "aRMS" };
             model1.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = "Time" });
-            model1.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = "g", Minimum = 0, Maximum = 100 });
+            model1.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = "g", Minimum = 0, Maximum = 10 });
             var lineSeries1 = new LineSeries();
             model1.Series.Add(lineSeries1);
             plotView2.Model = model1;
 
             var model2 = new PlotModel { Title = "aPeak" };
             model2.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = "Time" });
-            model2.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = "g", Minimum = 0, Maximum = 100 });
+            model2.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = "g", Minimum = 0, Maximum = 10 });
             var lineSeries2 = new LineSeries();
             model2.Series.Add(lineSeries2);
             plotView3.Model = model2;
 
             var model3 = new PlotModel { Title = "Temperature" };
             model3.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = "Time" });
-            model3.Axes.Add(new LinearAxis { Position = AxisPosition.Left,Title = "℃", Minimum = 0, Maximum = 100 });
+            model3.Axes.Add(new LinearAxis { Position = AxisPosition.Left,Title = "℃", Minimum = -40, Maximum = 85, MinorStep = 10 });
             var lineSeries3 = new LineSeries();
             model3.Series.Add(lineSeries3);
             plotView4.Model = model3;
@@ -154,6 +157,76 @@ namespace Modbus_TCP_data_collector
         {
             if (isReading) return;
             isReading = true;
+
+            switch (comboBox1.SelectedIndex)//confirm address according master and port
+            {
+                case 0://ICE11
+                    {
+                        switch (comboBox2.SelectedIndex)
+                        {
+                            case 0:
+                                address = (ushort)256;
+                                break;
+                            case 1:
+                                address = (ushort)272;
+                                break;
+                            case 2:
+                                address = (ushort)288;
+                                break;
+                            case 3:
+                                address = (ushort)304;
+                                break;
+                            case 4:
+                                address = (ushort)320;
+                                break;
+                            case 5:
+                                address = (ushort)336;
+                                break;
+                            case 6:
+                                address = (ushort)352;
+                                break;
+                            case 7:
+                                address = (ushort)368;
+                                break;
+                        }
+                        break;
+                    }
+                case 1://ICE2/3
+                    {
+                        switch (comboBox2.SelectedIndex)
+                        {
+                            case 0:
+                                address = (ushort)999;
+                                break;
+                            case 1:
+                                address = (ushort)1999;
+                                break;
+                            case 2:
+                                address = (ushort)2999;
+                                break;
+                            case 3:
+                                address = (ushort)3999;
+                                break;
+                            case 4:
+                                address = (ushort)4999;
+                                break;
+                            case 5:
+                                address = (ushort)5999;
+                                break;
+                            case 6:
+                                address = (ushort)6999;
+                                break;
+                            case 7:
+                                address = (ushort)7999;
+                                break;
+                        }
+                    }
+                    break;
+                default:
+                    address = 0;
+                    break;
+            }
+
             readThread = new Thread(ReadData);
             readThread.Start();
 
@@ -161,15 +234,16 @@ namespace Modbus_TCP_data_collector
 
         private void ReadData()
         {
+            
             while (isReading)
             {
                 try
                 {
-                    ushort[] registers = master.ReadHoldingRegisters(Convert.ToUInt16(textBoxaddress.Text), 4);
-                    dataBuffer.Add(registers[0]);
-                    dataBuffer1.Add(registers[1]);
-                    dataBuffer2.Add(registers[2]);
-                    dataBuffer3.Add(registers[3]);
+                    ushort[] registers = master.ReadHoldingRegisters(address, 8);
+                    dataBuffer.Add(registers[0] /100);
+                    dataBuffer1.Add((float)registers[2] / 100);
+                    dataBuffer2.Add((float)registers[4] / 100);
+                    dataBuffer3.Add(registers[6]);
                     if (dataBuffer.Count > 1000)
                     {
                         dataBuffer.RemoveAt(0);
@@ -189,13 +263,13 @@ namespace Modbus_TCP_data_collector
                         //File.Create(newFilePath);
                         using (StreamWriter sw = new StreamWriter(newFilePath, true))
                         {
-                            sw.WriteLine("vRMS,aRMS,aPeak,Temperature");
+                            sw.WriteLine("Date,Time,vRMS(mm/s),aRMS(g),aPeak(g),Temperature(℃)");
                         }
                     }
                     
                     using (StreamWriter sw = new StreamWriter(newFilePath, true))
                     {
-                        sw.WriteLine($"{registers[0]},{registers[1]},{registers[2]},{registers[3]}");
+                        sw.WriteLine($"{System.DateTime.Now.ToString("yyyy-MM-dd")},{System.DateTime.Now.ToString("HH:mm:ss")},{registers[0]/100},{(float)registers[2]/100},{(float)registers[4]/100},{registers[6]}");
                     }
 
 
