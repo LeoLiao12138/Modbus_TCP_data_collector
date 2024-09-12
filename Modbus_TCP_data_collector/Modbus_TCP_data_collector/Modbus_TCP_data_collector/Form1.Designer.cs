@@ -43,6 +43,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.buttonSetIO_Link = new System.Windows.Forms.Button();
+            this.buttonResetIO_Link = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonConnect
@@ -61,8 +63,7 @@
             this.textBoxIP.Name = "textBoxIP";
             this.textBoxIP.Size = new System.Drawing.Size(96, 22);
             this.textBoxIP.TabIndex = 1;
-            this.textBoxIP.Text = "192.168.1.5";
-            this.textBoxIP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxIP.Text = "127.0.0.1";
             // 
             // plotView1
             // 
@@ -78,7 +79,7 @@
             // 
             // buttonReadData
             // 
-            this.buttonReadData.Location = new System.Drawing.Point(164, 188);
+            this.buttonReadData.Location = new System.Drawing.Point(31, 300);
             this.buttonReadData.Name = "buttonReadData";
             this.buttonReadData.Size = new System.Drawing.Size(115, 33);
             this.buttonReadData.TabIndex = 3;
@@ -88,7 +89,7 @@
             // 
             // buttonStopRead
             // 
-            this.buttonStopRead.Location = new System.Drawing.Point(164, 244);
+            this.buttonStopRead.Location = new System.Drawing.Point(163, 300);
             this.buttonStopRead.Name = "buttonStopRead";
             this.buttonStopRead.Size = new System.Drawing.Size(115, 33);
             this.buttonStopRead.TabIndex = 4;
@@ -98,7 +99,7 @@
             // 
             // buttonDisconnect
             // 
-            this.buttonDisconnect.Location = new System.Drawing.Point(31, 244);
+            this.buttonDisconnect.Location = new System.Drawing.Point(163, 188);
             this.buttonDisconnect.Name = "buttonDisconnect";
             this.buttonDisconnect.Size = new System.Drawing.Size(115, 33);
             this.buttonDisconnect.TabIndex = 5;
@@ -199,11 +200,36 @@
             this.comboBox2.TabIndex = 14;
             this.comboBox2.SelectedIndex = 0;
             // 
+            // buttonSetIO_Link
+            // 
+            this.buttonSetIO_Link.Enabled = false;
+            this.buttonSetIO_Link.Location = new System.Drawing.Point(31, 246);
+            this.buttonSetIO_Link.Name = "buttonSetIO_Link";
+            this.buttonSetIO_Link.Size = new System.Drawing.Size(115, 33);
+            this.buttonSetIO_Link.TabIndex = 15;
+            this.buttonSetIO_Link.Text = "Set IO-Link";
+            this.buttonSetIO_Link.UseVisualStyleBackColor = true;
+            this.buttonSetIO_Link.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // buttonResetIO_Link
+            // 
+            this.buttonResetIO_Link.Enabled = false;
+            this.buttonResetIO_Link.Location = new System.Drawing.Point(164, 246);
+            this.buttonResetIO_Link.Name = "buttonResetIO_Link";
+            this.buttonResetIO_Link.Size = new System.Drawing.Size(115, 33);
+            this.buttonResetIO_Link.TabIndex = 16;
+            this.buttonResetIO_Link.Text = "Reset IO-Link";
+            this.buttonResetIO_Link.UseVisualStyleBackColor = true;
+            this.buttonResetIO_Link.Click += new System.EventHandler(this.button2_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(1275, 816);
+            this.Controls.Add(this.buttonResetIO_Link);
+            this.Controls.Add(this.buttonSetIO_Link);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label3);
@@ -243,6 +269,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Button buttonSetIO_Link;
+        private System.Windows.Forms.Button buttonResetIO_Link;
     }
 }
 

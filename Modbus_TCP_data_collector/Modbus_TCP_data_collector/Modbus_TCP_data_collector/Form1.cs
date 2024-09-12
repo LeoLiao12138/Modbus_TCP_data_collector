@@ -145,6 +145,8 @@ namespace Modbus_TCP_data_collector
                 buttonDisconnect.Enabled = true;
                 buttonReadData.Enabled = true;
                 buttonStopRead.Enabled = true;
+                buttonSetIO_Link.Enabled = true;
+                buttonResetIO_Link.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -157,6 +159,8 @@ namespace Modbus_TCP_data_collector
         {
             if (isReading) return;
             isReading = true;
+
+            
 
             switch (comboBox1.SelectedIndex)//confirm address according master and port
             {
@@ -240,10 +244,14 @@ namespace Modbus_TCP_data_collector
                 try
                 {
                     ushort[] registers = master.ReadHoldingRegisters(address, 8);
-                    dataBuffer.Add(registers[0] /100);
-                    dataBuffer1.Add((float)registers[2] / 100);
-                    dataBuffer2.Add((float)registers[4] / 100);
-                    dataBuffer3.Add(registers[6]);
+                    ushort[] registers_swap = { (ushort)((registers[0] & 0xFF00)>>8 | (registers[0] & 0x00FF) << 8),
+                                                (ushort)((registers[2] & 0xFF00)>>8 | (registers[2] & 0x00FF) << 8), 
+                                                (ushort)((registers[4] & 0xFF00)>>8 | (registers[4] & 0x00FF) << 8),
+                                                (ushort)((registers[6] & 0xFF00)>>8 | (registers[6] & 0x00FF) << 8)};
+                    dataBuffer.Add(registers_swap[0] /100);
+                    dataBuffer1.Add((float)registers_swap[1] / 100);
+                    dataBuffer2.Add((float)registers_swap[2] / 100);
+                    dataBuffer3.Add(registers_swap[3]);
                     if (dataBuffer.Count > 1000)
                     {
                         dataBuffer.RemoveAt(0);
@@ -269,7 +277,7 @@ namespace Modbus_TCP_data_collector
                     
                     using (StreamWriter sw = new StreamWriter(newFilePath, true))
                     {
-                        sw.WriteLine($"{System.DateTime.Now.ToString("yyyy-MM-dd")},{System.DateTime.Now.ToString("HH:mm:ss")},{registers[0]/100},{(float)registers[2]/100},{(float)registers[4]/100},{registers[6]}");
+                        sw.WriteLine($"{System.DateTime.Now.ToString("yyyy-MM-dd")},{System.DateTime.Now.ToString("HH:mm:ss")},{registers_swap[0]/100},{(float)registers_swap[1]/100},{(float)registers_swap[2]/100},{registers_swap[3]}");
                     }
 
 
@@ -335,6 +343,8 @@ namespace Modbus_TCP_data_collector
                     buttonDisconnect.Enabled = false;
                     buttonReadData.Enabled = false;
                     buttonStopRead.Enabled = false;
+                    buttonSetIO_Link.Enabled = false;
+                    buttonResetIO_Link.Enabled = false;
                 }
                 catch (Exception ex)
                 {
@@ -347,6 +357,183 @@ namespace Modbus_TCP_data_collector
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Tcp_disconnect();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ushort cofirm_address = 511;
+            ushort config_address= 1512;
+            
+
+            switch (comboBox1.SelectedIndex)//confirm address according master and port
+            {
+                case 0://ICE11
+                    {
+                        switch (comboBox2.SelectedIndex)
+                        {
+                            case 0:
+                                address = (ushort)256;
+                                config_address = (ushort)1512;
+                                break;
+                            case 1:
+                                address = (ushort)272;
+                                config_address = (ushort)1576;
+                                break;
+                            case 2:
+                                address = (ushort)288;
+                                config_address = (ushort)1640;
+                                break;
+                            case 3:
+                                address = (ushort)304;
+                                config_address = (ushort)1704;
+                                break;
+                            case 4:
+                                address = (ushort)320;
+                                config_address = (ushort)1768;
+                                break;
+                            case 5:
+                                address = (ushort)336;
+                                config_address = (ushort)1832;
+                                break;
+                            case 6:
+                                address = (ushort)352;
+                                config_address = (ushort)1896;
+                                break;
+                            case 7:
+                                address = (ushort)368;
+                                config_address = (ushort)1960;
+                                break;
+                        }
+                        break;
+                    }
+                case 1://ICE2/3
+                    {
+                        switch (comboBox2.SelectedIndex)
+                        {
+                            case 0:
+                                address = (ushort)999;
+                                break;
+                            case 1:
+                                address = (ushort)1999;
+                                break;
+                            case 2:
+                                address = (ushort)2999;
+                                break;
+                            case 3:
+                                address = (ushort)3999;
+                                break;
+                            case 4:
+                                address = (ushort)4999;
+                                break;
+                            case 5:
+                                address = (ushort)5999;
+                                break;
+                            case 6:
+                                address = (ushort)6999;
+                                break;
+                            case 7:
+                                address = (ushort)7999;
+                                break;
+                        }
+                    }
+                    break;
+                default:
+                    address = 0;
+                    break;
+            }
+            master.WriteSingleRegister(cofirm_address, 1);//先设置512为1，才能设置下面的参数
+            master.WriteSingleRegister(config_address, 2);
+            master.WriteSingleRegister(cofirm_address, 0);
+
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ushort cofirm_address = 511;
+            ushort config_address = 1512;
+
+
+            switch (comboBox1.SelectedIndex)//confirm address according master and port
+            {
+                case 0://ICE11
+                    {
+                        switch (comboBox2.SelectedIndex)
+                        {
+                            case 0:
+                                address = (ushort)256;
+                                config_address = (ushort)1512;
+                                break;
+                            case 1:
+                                address = (ushort)272;
+                                config_address = (ushort)1576;
+                                break;
+                            case 2:
+                                address = (ushort)288;
+                                config_address = (ushort)1640;
+                                break;
+                            case 3:
+                                address = (ushort)304;
+                                config_address = (ushort)1704;
+                                break;
+                            case 4:
+                                address = (ushort)320;
+                                config_address = (ushort)1768;
+                                break;
+                            case 5:
+                                address = (ushort)336;
+                                config_address = (ushort)1832;
+                                break;
+                            case 6:
+                                address = (ushort)352;
+                                config_address = (ushort)1896;
+                                break;
+                            case 7:
+                                address = (ushort)368;
+                                config_address = (ushort)1960;
+                                break;
+                        }
+                        break;
+                    }
+                case 1://ICE2/3
+                    {
+                        switch (comboBox2.SelectedIndex)
+                        {
+                            case 0:
+                                address = (ushort)999;
+                                break;
+                            case 1:
+                                address = (ushort)1999;
+                                break;
+                            case 2:
+                                address = (ushort)2999;
+                                break;
+                            case 3:
+                                address = (ushort)3999;
+                                break;
+                            case 4:
+                                address = (ushort)4999;
+                                break;
+                            case 5:
+                                address = (ushort)5999;
+                                break;
+                            case 6:
+                                address = (ushort)6999;
+                                break;
+                            case 7:
+                                address = (ushort)7999;
+                                break;
+                        }
+                    }
+                    break;
+                default:
+                    address = 0;
+                    break;
+            }
+            master.WriteSingleRegister(cofirm_address, 1);//先设置512为1，才能设置下面的参数
+            master.WriteSingleRegister(config_address, 3);
+            master.WriteSingleRegister(cofirm_address, 0);
+
         }
     }
 }
